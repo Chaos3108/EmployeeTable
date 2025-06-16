@@ -15,6 +15,7 @@ const Table = () => {
         );
         setData(response.data);
       } catch (error) {
+        alert("failed to fetch data");
         console.error("Error fetching data:", error);
       }
     };
@@ -79,7 +80,7 @@ const Table = () => {
           Previous
         </button>
 
-        <button
+        <span
           onClick={() => handlePageClick(currentPage)}
           style={{
             marginRight: "10px",
@@ -92,7 +93,7 @@ const Table = () => {
           }}
         >
           {currentPage}
-        </button>
+        </span>
         <button
           style={{
             marginRight: "10px",
