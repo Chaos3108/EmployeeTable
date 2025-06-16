@@ -78,7 +78,7 @@ const Table = () => {
             color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: currentPage === 1 ? "not-allowed" : "pointer",
+            cursor: "pointer",
           }}
         >
           Previous
