@@ -80,19 +80,18 @@ const Table = () => {
           Previous
         </button>
 
-        <span
+        <div
           style={{
+            display: "inline-block",
             marginRight: "10px",
             padding: "5px 10px",
             backgroundColor: "green",
             color: "#fff",
-            border: "none",
             borderRadius: "4px",
-            cursor: "pointer",
           }}
         >
           {currentPage}
-        </span>
+        </div>
         <button
           style={{
             marginRight: "10px",
