@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./table.css";
+import "./table.css"; // Optional styling file
+
 const ITEMS_PER_PAGE = 10;
 
 const Table = () => {
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
           "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
@@ -19,95 +21,94 @@ const Table = () => {
         console.error("Error fetching data:", error);
       }
     };
-    getData();
+
+    fetchData();
   }, []);
 
-  // Calculate paginated data
+  // Pagination calculations
+  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedData = data.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
-
-  const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  // Handlers
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   const handleNext = () => {
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-  };
-
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
   return (
-    <div style={{ width: "100%" }}>
-      <table>
-        <thead className="table-header">
+    <div style={{ padding: "20px", width: "100%", boxSizing: "border-box" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead style={{ backgroundColor: 'green', color: 'white' }}>
           <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Name</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Email</th>
+            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Role</th>
           </tr>
         </thead>
-        <tbody className="table-body">
+        <tbody>
           {paginatedData.map((item) => (
             <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.email}</td>
-              <td>{item.role}</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.id}</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.name}</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.email}</td>
+              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{item.role}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: "10px", textAlign: "center" }}>
+
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
         <button
+          onClick={handlePrevious}
+          disabled={currentPage === 1}
           style={{
+            padding: "8px 16px",
             marginRight: "10px",
-            padding: "5px 10px",
             backgroundColor: "green",
-            color: "#fff",
+            color: "white",
             border: "none",
             borderRadius: "4px",
-            cursor: "pointer",
+            cursor: currentPage === 1 ? "not-allowed" : "pointer",
           }}
-          onClick={handlePrev}
-          disabled={currentPage === 1}
         >
           Previous
         </button>
 
         <span
           style={{
-            display: "inline-block",
+            padding: "8px 16px",
             marginRight: "10px",
-            padding: "5px 10px",
             backgroundColor: "green",
-            color: "#fff",
+            color: "white",
             borderRadius: "4px",
-            fontSize: "16px", 
-            fontWeight: "bold", 
-            visibility: "visible", 
+            display: "inline-block",
+            fontWeight: "bold",
           }}
         >
           {currentPage}
         </span>
 
         <button
-          style={{
-            marginRight: "10px",
-            padding: "5px 10px",
-            backgroundColor: "green",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
           onClick={handleNext}
           disabled={currentPage === totalPages}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: "green",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+          }}
         >
           Next
         </button>
