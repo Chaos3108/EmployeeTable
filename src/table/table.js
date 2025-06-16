@@ -70,7 +70,8 @@ const Table = () => {
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <button
           onClick={handlePrevious}
-          disabled={currentPage === 1}
+          disabled={currentPage === 0
+          }
           style={{
             padding: "8px 16px",
             marginRight: "10px",
