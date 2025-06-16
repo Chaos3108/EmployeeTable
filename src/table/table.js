@@ -5,7 +5,7 @@ const ITEMS_PER_PAGE = 10;
 
 const Table = () => {
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   useEffect(() => {
     const getData = async () => {
@@ -63,7 +63,7 @@ const Table = () => {
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: "10px" , textAlign: "center" }}>
+      <div style={{ marginTop: "10px", textAlign: "center" }}>
         <button
           style={{
             marginRight: "10px",
@@ -81,7 +81,6 @@ const Table = () => {
         </button>
 
         <span
-          onClick={() => handlePageClick(currentPage)}
           style={{
             marginRight: "10px",
             padding: "5px 10px",
